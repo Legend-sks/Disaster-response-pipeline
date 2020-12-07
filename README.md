@@ -39,7 +39,7 @@ there are total 9 Files in this repository:
 4. Readme file
 
 ### Imbalance in the dataset
-You can see that there are some imbalances in the dataset. We dont have enough values\messages for certain categories, keeping that in mind the model output might always be accurate for messages whch sholud go in these categories. One example for such is water category.
+You can see that there are some imbalances in the dataset. We dont have enough values\messages for certain categories, keeping that in mind the model output might always be accurate for messages whch sholud go in these categories. Some examples for such are water , child alone and offer categories.
 
 ### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
