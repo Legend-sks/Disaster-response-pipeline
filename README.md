@@ -1,4 +1,4 @@
-# Disaster Response Pipeline Project
+# Disaster Response Pipeline Project (GitHub Repository link https://github.com/Legend-sks/Udacity_project_2)
 
 This is a project done for Udacity  Data Scientist Nano degree program. This projects requires to create a machine learning model to predict classification for messages sent during disaster in right category. The data set is Provided by Figure Eight team and contains real messages set during disaster events.
 
