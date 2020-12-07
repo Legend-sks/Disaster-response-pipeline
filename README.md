@@ -22,6 +22,10 @@ Here I have created a Machine Learning pipeline which models the data and predic
 3. Machine learning pipeline: here I have used TfidfTransformer,RandomForestClassifier and MultiOutputClassifier to create the model. After that Gridsearch was used to make model more accurate(permutations and combinations ot various parameters was tried and then final parameters were identified).
 4. Split dataset, fit and test model: Split the model in train and test data set and fit the model on the data. Calculate the accuracy, precision and f1-scores and fine tune the data till ssatisfed with results.
 
+Webapp page:
+This gives a very high level description of data using visuals. here you can enter a new message the see which all categoeies it falls into.
+
+
 ### Files in this repository
 there are total 9 Files in this repository:
 1. App folder: 
