@@ -23,6 +23,8 @@ nltk.download('wordnet')
 
 
 def load_data(database_filepath):
+ """Data from SQLite database table is fetched and stored in a pandas data frame. This function returns 3 things, 1. a series object with all messages,
+ 2. a pandas dataframe with all the categories data, 3. Index object with name of all categories"""
     engine = create_engine('sqlite:///' + database_filepath)
     connection = engine.connect()
     metadata = db.MetaData()
@@ -39,6 +41,7 @@ def load_data(database_filepath):
     pass
 
 def tokenize(text):
+  """this function ferforms 1. Normalization, 2. Tokenization, 3. Stop Word removal , and 4.Lammetization on the messages """
     stop_words = stopwords.words("english")
     lemmatizer = WordNetLemmatizer()
     text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())    
@@ -51,13 +54,15 @@ def tokenize(text):
 
 
 def build_model():
+    """This functions build the multioutput classification model ML pipeline. The model pipeline is fine tuned by using gridSearch. This function returs a pipeline model"""
     pipeline = Pipeline([
     ('vect', CountVectorizer(tokenizer=tokenize)),
     ('tfidf', TfidfTransformer()),
     ('clf', MultiOutputClassifier(RandomForestClassifier(class_weight="balanced"))),
     ])
     
-    parameters = {'clf__estimator__n_estimators': [5,10,30],'clf__estimator__min_samples_split': [2, 3, 4],'clf__estimator__criterion': ['gini']       #'clf__estimator__max_depth': [2,5, None]
+    parameters = {'clf__estimator__n_estimators': [5,10,30],'clf__estimator__min_samples_split': [2, 3, 4],'clf__estimator__criterion': ['gini'] 
+                  #'clf__estimator__max_depth': [2,5, None]
     }
     model = GridSearchCV(pipeline, param_grid=parameters)
     
@@ -66,6 +71,7 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """this function calculates the f1 score, precision and recall for the test set """
     
     #train_pipeline
     Y_pred = model.predict(X_test)
@@ -78,6 +84,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """This fumction creates a pickle file from the model"""
     with open(model_filepath, 'wb') as pkl_file:
                   pickle.dump(model, pkl_file)
     pkl_file.close()
@@ -109,7 +116,7 @@ def main():
         print('Please provide the filepath of the disaster messages database '\
               'as the first argument and the filepath of the pickle file to '\
               'save the model to as the second argument. \n\nExample: python '\
-              'train_classifier.py ../data/DisasterResponse.db classifier.pkl')
+              'train_classifier.py ../DisasterResponse.db classifier.pkl')
 
 
 if __name__ == '__main__':
