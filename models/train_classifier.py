@@ -23,8 +23,8 @@ nltk.download('wordnet')
 
 
 def load_data(database_filepath):
- """Data from SQLite database table is fetched and stored in a pandas data frame. This function returns 3 things, 1. a series object with all messages,
- 2. a pandas dataframe with all the categories data, 3. Index object with name of all categories"""
+    """Data from SQLite database table is fetched and stored in a pandas data frame. This function returns 3 things, 1. a series object with all messages,
+    2. a pandas dataframe with all the categories data, 3. Index object with name of all categories"""
     engine = create_engine('sqlite:///' + database_filepath)
     connection = engine.connect()
     metadata = db.MetaData()
@@ -38,10 +38,9 @@ def load_data(database_filepath):
     variables = df.columns[-36:]
     Y= df[variables]
     return X, Y, variables
-    pass
 
 def tokenize(text):
-  """this function ferforms 1. Normalization, 2. Tokenization, 3. Stop Word removal , and 4.Lammetization on the messages """
+    """this function ferforms 1. Normalization, 2. Tokenization, 3. Stop Word removal , and 4.Lammetization on the messages """
     stop_words = stopwords.words("english")
     lemmatizer = WordNetLemmatizer()
     text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())    
@@ -50,8 +49,6 @@ def tokenize(text):
     # lemmatize and remove stop words
     tokens = [lemmatizer.lemmatize(word) for word in tokens if word not in stop_words]
     return tokens
-    pass
-
 
 def build_model():
     """This functions build the multioutput classification model ML pipeline. The model pipeline is fine tuned by using gridSearch. This function returs a pipeline model"""
@@ -66,8 +63,7 @@ def build_model():
     }
     model = GridSearchCV(pipeline, param_grid=parameters)
     
-    return model    
-    pass
+    return model
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
@@ -80,15 +76,12 @@ def evaluate_model(model, X_test, Y_test, category_names):
         print(column)
         print('_'*60)
         print(classification_report(Y_test[column], Y_pred[:,idx]))
-    pass
-
 
 def save_model(model, model_filepath):
     """This fumction creates a pickle file from the model"""
     with open(model_filepath, 'wb') as pkl_file:
                   pickle.dump(model, pkl_file)
     pkl_file.close()
-    pass
 
 
 def main():
