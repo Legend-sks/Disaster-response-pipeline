@@ -10,7 +10,6 @@ def load_data(messages_filepath, categories_filepath):
     categories = pd.read_csv(categories_filepath)
     df = messages.merge(categories, how = 'outer' , on =['id'])
     return df
-    pass
 
 
 def clean_data(df):
@@ -36,14 +35,12 @@ last two charecters, new columns are then filled with last charecter"""
     df = pd.concat(frames, axis =1, sort = False)    
     df = df.drop_duplicates()
     return df
-    pass
 
 
 def save_data(df, database_filename):
 """Data Frame is stored in the SQlite DB"""
-    engine = create_engine('sqlite:///DisasterResponse.db')
-    df.to_sql('Project2', engine, index=False)
-    pass  
+    engine = create_engine('sqlite:///' +database_filename)
+    df.to_sql('Project2', engine, index=False)  
 
 
 def main():
