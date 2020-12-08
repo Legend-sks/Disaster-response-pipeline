@@ -1,5 +1,6 @@
 import sys
 import pandas as pd
+import numpy as np
 from sqlalchemy import create_engine
 
 
@@ -27,7 +28,9 @@ def clean_data(df):
     # set each value to be the last character of the string
         categories[column] = categories[column].apply(lambda x:x[-1:])
         categories[column] = categories[column].apply(pd.to_numeric)
-    
+    # we have few entries in related column as value 2. we need to convert these to 1.
+    a = np.array(categories['related'].values.tolist())
+    categories['related'] = np.where(a > 1, 1, a).tolist()
     df = df.drop(['categories'], axis = 1)
     
     frames = [df, categories]
